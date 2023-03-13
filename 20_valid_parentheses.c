@@ -4,45 +4,54 @@
 #include <stdbool.h>
 bool isValid(char *s)
 {
-	int br_l = 0;
-	int br_m = 0;
-	int br_b = 0;
+	int cnt_l = 0;
+	int cnt_m = 0;
+	int cnt_b = 0;
+	int pos_l[5000] = {0};
+	int pos_m[5000] = {0};
+	int pos_b[5000] = {0};
+	bool isL = false;
+	bool isM = false;
+	bool isB = false;
 	int i = 0;
 	while(s[i] != '\0')
 	{
 		switch(s[i])
 		{
 			case '(':
-				br_l = i+1;
+				cnt_l ++;
+				pos_l[cnt_l] = i;
 				break;
 			case '[':
-				br_m = i+1;
+				cnt_m ++;
+				pos_m[cnt_m] = i;
 				break;
 			case '{':
-				br_b = i+1;
+				cnt_b ++;
+				pos_b[cnt_b] = i;
 				break;
 			case ')':
-                //open_l = false;
-				if(br_b > br_l || br_m > br_l)
-					return false;
-				br_l = 0;
-                break;
+				if(cnt_l == 0 || pos_b[cnt_b] > pos_l[cnt_l] || pos_m[cnt_m] > pos_l[cnt_l])
+					return false;	
+				if(cnt_l > 0)
+					cnt_l --;
+				break;
 			case ']':
-                //open_m = false;
-                if(br_l > br_m || br_b > br_m)
+                if(cnt_m == 0 || pos_l[cnt_l] > pos_m[cnt_m] || pos_b[cnt_b] > pos_m[cnt_m])
 				    return false;
-                br_m = 0;
+				if(cnt_m > 0)
+					cnt_m --;
 				break;
 			case '}':
-                //open_b = false;
-                if(br_l > br_b || br_m > br_b)    
+                if(cnt_b == 0 || pos_l[cnt_l] > pos_b[cnt_b] || pos_m[cnt_m] > pos_b[cnt_b])    
 					return false;
-				br_b = 0;
+				if(cnt_b > 0)
+                    cnt_b --;
                 break;
 		}
 		i++;
 	}
-	if(br_l == 0 && br_m == 0 && br_b == 0)	
+	if(cnt_l == 0 && cnt_m == 0 && cnt_b == 0)	
 		return true;
 	return false;
 }
@@ -64,7 +73,7 @@ int main()
 		printf("true\n");
 	else
 		printf("false\n");
-	char *input4 = "([)]";
+	char *input4 = "(]";
     if(isValid(input4))
         printf("true\n");
     else
