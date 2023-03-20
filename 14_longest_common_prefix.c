@@ -4,14 +4,16 @@
 
 char *longestCommonPrefix(char **strs, int strsSize){
 	char *strout = malloc(sizeof(char)*200);
-	char *compare = malloc(sizeof(char)*200);
+	//char out[200] = {'\0'};
+	//char *strout = out;
+	char *compare = strs[0];
 	for(int j = 0 ; j < 200 ; j++){
-		compare = strs[0];
 		for(int i = 0 ; i < strsSize ; i++){
-			if(compare[j] != strs[i][j]){
-				return strout;}
+			if(compare[j] != strs[i][j])
+				return strout;
 		}
 		strout[j] = compare[j];
+		//printf("%c\n",strout[j]);
 	}
 	return strout;
 } 
