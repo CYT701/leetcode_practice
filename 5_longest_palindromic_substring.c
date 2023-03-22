@@ -47,7 +47,7 @@ int main()
 	printf("%s\n",longestPalindrome(s1));
 	char *s2 = "cbbd";
 	printf("%s\n",longestPalindrome(s2));
-	char *s3 = "saadefsa";
+	char *s3 = "s";
     printf("%s\n",longestPalindrome(s3));
 	char *s4 = "bbcbbd";
     printf("%s\n",longestPalindrome(s4));
