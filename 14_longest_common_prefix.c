@@ -1,21 +1,32 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 char *longestCommonPrefix(char **strs, int strsSize){
-	char *strout = malloc(sizeof(char)*200);
-	//char out[200] = {'\0'};
-	//char *strout = out;
-	char *compare = strs[0];
-	for(int j = 0 ; j < 200 ; j++){
-		for(int i = 0 ; i < strsSize ; i++){
-			if(compare[j] != strs[i][j])
-				return strout;
-		}
-		strout[j] = compare[j];
-		//printf("%c\n",strout[j]);
-	}
-	return strout;
+    //char *strout = malloc(sizeof(char)*200);
+    if(strlen(strs[0]) == 0)
+        return strs[0];
+    char *compare = strs[0];
+    int count_length = 0;
+    bool isCommon = true;
+    for(int j = 0 ; j < strlen(strs[0]) ; j++){
+        for(int i = 0 ; i < strsSize ; i++){
+            if(compare[j] != strs[i][j])
+			{
+                isCommon = false;
+                break;
+			}
+        }
+        if(!isCommon)
+            break;
+        count_length ++;
+    }
+    char *strout = malloc(sizeof(char)*(count_length+1));
+    for(int i = 0 ; i < count_length ; i++)
+        strout[i] = compare[i];
+    strout[count_length] = '\0' ;
+    return strout;
 } 
 
 int main()
