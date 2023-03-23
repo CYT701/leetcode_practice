@@ -5,38 +5,41 @@
 
 char *convert(char *s,int numRows)
 {
-	//int temp = 2 * numRows - 2;
+
 	int row_pos = 0;//count straight
 	int col_pos = 0;//count horizon
 	bool goForward = true;
 	int arr[numRows][strlen(s)];
-	for(int i = 0 ; i < numRows ; i++)//initialize arr with -1
-	{
-        for(int j =0;j<strlen(s);j++)
-            arr[i][j] = -1;
-    }
-
-	for(int i = 0 ; i < strlen(s) ; i++)//put index of s[] to arr
-	{
-		if(goForward)
+	if(numRows == 1)
+		return s;
+	else if(numRows > 1){
+		for(int i = 0 ; i < numRows ; i++)//initialize arr with -1
 		{
-			arr[row_pos][col_pos] = i;
-			row_pos ++;
-			if(row_pos == numRows)
+        	for(int j =0;j<strlen(s);j++)
+            	arr[i][j] = -1;
+    	}
+		for(int i = 0 ; i < strlen(s) ; i++)//put index of s[] to arr
+		{
+			if(goForward)
 			{
-				goForward = false;
-				row_pos --;
+				arr[row_pos][col_pos] = i;
+				row_pos ++;
+				if(row_pos == numRows)
+				{
+					goForward = false;
+					row_pos --;
+				}
 			}
-		}
-		else
-		{
-			row_pos --;
-			col_pos ++;
-			arr[row_pos][col_pos] = i;
-			if(row_pos == 0)
+			else
 			{
-				goForward = true;
-				row_pos++;
+				row_pos --;
+				col_pos ++;
+				arr[row_pos][col_pos] = i;
+				if(row_pos == 0)
+				{
+					goForward = true;
+					row_pos++;
+				}
 			}
 		}
 	}
@@ -71,5 +74,7 @@ int main()
 	char *s = "PAYPALISHIRING";
 	printf("%s\n",convert(s,3));
 	printf("%s\n",convert(s,4));
+	char *s1 = "AB";
+	printf("%s\n",convert(s1,1));
 	return 0;
 }
