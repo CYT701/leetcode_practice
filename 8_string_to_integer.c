@@ -3,35 +3,34 @@
 #include <string.h>
 #include <stdbool.h>
 
-int myAtoi(char *s)
-{
-	bool isNum = false;
-	int count = 0;
-	int firstchar = 0;
-	for(int i = 0 ; s[i] != '\0' ; i++)
-	{
-		if(isNum)
-		{
-			if((s[i] - '0' <= 9 && s[i] - '0' >= 0)||s[i] == '-')
-				count++;
-			else
-				break;
-		}
-		else//!isNum
-		{
-			if((s[i] - '0' <= 9 && s[i] - '0' >= 0)||s[i] == '-')
-			{
-				count++;
-				firstchar = i;
-				isNum = true;
-			}
-		}
-	}
-	char *outstr = malloc(sizeof(char)*(count+1));
-	for(int i = 0 ; i < count ; i++)
-		outstr[i] = s[firstchar + i]; 
-	outstr[count] = '\0';
-	return atoi(outstr);
+int myAtoi(char * s){
+    bool isNum = false;
+    int count = 0;
+    int firstchar = 0;
+    for(int i = 0 ; s[i] != '\0' ; i++)
+    {
+        if(isNum)
+        {
+            if(s[i] == ' ' || s[i] == '-' || s[i] == '+' || (s[i] - '0' <= 9 && s[i] - '0' >= 0))
+                count++;
+            else
+                break;
+        }
+        else//!isNum
+        {
+            if(s[i] == ' ' || s[i] == '-' || s[i] == '+' || (s[i] - '0' <= 9 && s[i] - '0' >= 0))
+            {
+                count++;
+                firstchar = i;
+                isNum = true;
+            }
+        }
+    }
+    char *outstr = malloc(sizeof(char)*(count+1));
+    for(int i = 0 ; i < count ; i++)
+        outstr[i] = s[firstchar + i];
+    outstr[count] = '\0';
+    return atoi(outstr);
 }
 
 int main()
